@@ -7,14 +7,27 @@ public class LocalFileSystem implements FileSystem {
     private String parent;
     private List<String> lChildren;
     private FileSystem reference;
+    private int size;
 
-    public LocalFileSystem() {
-
+    public LocalFileSystem(String root, String parent, List<String> lChildren, FileSystem reference, int size) {
+        this.parent = parent;
+        this.size = size;
+        this.reference = reference;
+        this.root = root;
+        this.lChildren = new List<String>;
+        for(String s : lChildren) {
+            this.lChildren.add(s);
+        }
     }
 
     @Override
     public String getRoot() {
         return this.root;
+    }
+
+    @Override
+    public String getSize() {
+        return this.size;
     }
 
     @Override
@@ -39,6 +52,6 @@ public class LocalFileSystem implements FileSystem {
 
     @Override
     public FileSystem getReference() {
-        return null;
+        return this.reference;
     }
 }
