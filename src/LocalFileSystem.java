@@ -5,10 +5,10 @@ public class LocalFileSystem implements FileSystem {
 
     private String root;
     private String parent;
-    private String children;
+    private List<String> lChildren;
     private FileSystem reference;
 
-    public class LocalFileSystem() {
+    public LocalFileSystem() {
 
     }
 
@@ -24,7 +24,7 @@ public class LocalFileSystem implements FileSystem {
 
     @Override
     public List<String> getChildren(String path) {
-        return this.children;
+        return this.lChildren;
     }
 
     @Override
