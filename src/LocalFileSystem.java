@@ -26,7 +26,7 @@ public class LocalFileSystem implements FileSystem {
     }
 
     @Override
-    public String getSize() {
+    public int getSize() {
         return this.size;
     }
 
