@@ -16,6 +16,10 @@ public class Synchronizer {
 
     public static List<String> computeDirty(FileSystem lastSync, FileSystem fs, String currRelPath){
 
+        List<String> lPath = new List<String>;
+        if (lastSync.getSize() != fs.getSize()) {
+            lPath.add(lastSync.getRoot());
+        }
     }
 
     public static void mirror(FileSystem fs1, List<String> dirtyPath1, FileSystem fs2, List<String> dirtyPath2, String currRelPath){
