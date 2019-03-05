@@ -8,6 +8,10 @@ public class LocalFileSystem implements FileSystem {
     private String children;
     private FileSystem reference;
 
+    public class LocalFileSystem() {
+
+    }
+
     @Override
     public String getRoot() {
         return this.root;
@@ -15,12 +19,12 @@ public class LocalFileSystem implements FileSystem {
 
     @Override
     public String getParent(String path) {
-        return null;
+        return this.parent;
     }
 
     @Override
     public List<String> getChildren(String path) {
-        return null;
+        return this.children;
     }
 
     @Override
