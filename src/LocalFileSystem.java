@@ -1,23 +1,17 @@
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LocalFileSystem implements FileSystem {
 
     private String root;
-    private String parent;
-    private List<String> lChildren;
+    //private String parent;
+    //private List<String> lChildren;
     private FileSystem reference;
-    private int size;
 
-    public LocalFileSystem(String root, String parent, List<String> lChildren, FileSystem reference, int size) {
-        this.parent = parent;
-        this.size = size;
+    public LocalFileSystem(String root,/* String parent, List<String> lChildren,*/ FileSystem reference) {
         this.reference = reference;
         this.root = root;
-        this.lChildren = new List<String>;
-        for(String s : lChildren) {
-            this.lChildren.add(s);
-        }
     }
 
     @Override
@@ -26,18 +20,20 @@ public class LocalFileSystem implements FileSystem {
     }
 
     @Override
-    public int getSize() {
-        return this.size;
-    }
-
-    @Override
     public String getParent(String path) {
-        return this.parent;
+        File fichier = new File(path);
+        return fichier.getParent();
     }
 
     @Override
-    public List<String> getChildren(String path) {
-        return this.lChildren;
+    public String getChildren(String path, int i) {
+        List<String> lChildren = new ArrayList<String>();
+        File fichier = new File(path);
+        if (fichier.isDirectory()) {
+            String children[] = fichier.list();
+            return children[i];
+        }
+        return null;
     }
 
     @Override
