@@ -24,10 +24,14 @@ public class Synchronizer {
 
         File fichier = new File(currRelPath);
 
+
+
         File lastFichier = new File(lastRelPath);
 
 
+
         if (fichier.isDirectory() && lastFichier.isDirectory()) {
+            System.out.println("isDirectory");
             int i = 0;
             while (fs.getChildren(currRelPath, i) != null) {
                 for (String s : computeDirty(lastSync, fs, fs.getChildren(currRelPath, i), lastSync.getChildren(lastRelPath,i))) {
@@ -37,6 +41,7 @@ public class Synchronizer {
         }
 
         if (fichier.isFile() && lastFichier.isFile()) {
+            System.out.println("isFile");
             String checksumfs = getMD5Checksum(currRelPath);
             String checksumls = getMD5Checksum(lastRelPath);
             if (checksumfs.equals(checksumls)) {
