@@ -20,31 +20,30 @@ public class Synchronizer {
 
 
     public static List<String> computeDirty(FileSystem lastSync, FileSystem fs, String currRelPath, String lastRelPath) throws Exception{
+
         List<String> lsDirty = new ArrayList<String>();
 
         File fichier = new File(currRelPath);
-
-
 
         File lastFichier = new File(lastRelPath);
 
 
 
         if (fichier.isDirectory() && lastFichier.isDirectory()) {
-            System.out.println("isDirectory");
             int length = fichier.list().length;
             for (int i = 0; i<length;i++) {
-                for (String s : computeDirty(lastSync, fs, fs.getChildren(currRelPath, i), lastSync.getChildren(lastRelPath,i))) {
+                List<String> lis = computeDirty(lastSync, fs, currRelPath+"/"+fs.getChildren(currRelPath, i), lastRelPath+"/"+lastSync.getChildren(lastRelPath,i));
+                for (String s : lis) {
                     lsDirty.add(s);
                 }
             }
         }
 
-        if (fichier.isFile() && lastFichier.isFile()) {
-            System.out.println("isFile");
-            String checksumfs = getMD5Checksum(currRelPath);
-            String checksumls = getMD5Checksum(lastRelPath);
-            if (checksumfs.equals(checksumls)) {
+        else /*(fichier.isFile() && lastFichier.isFile()) */{
+
+            String checksumfs = getMD5Checksum(fichier.getAbsolutePath());
+            String checksumls = getMD5Checksum(lastFichier.getAbsolutePath());
+            if (!checksumfs.equals(checksumls) ) {
                 lsDirty.add(fichier.getPath());
             }
         }
