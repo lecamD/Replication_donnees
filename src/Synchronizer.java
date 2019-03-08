@@ -32,8 +32,8 @@ public class Synchronizer {
 
         if (fichier.isDirectory() && lastFichier.isDirectory()) {
             System.out.println("isDirectory");
-            int i = 0;
-            while (fs.getChildren(currRelPath, i) != null) {
+            int length = fichier.list().length;
+            for (int i = 0; i<length;i++) {
                 for (String s : computeDirty(lastSync, fs, fs.getChildren(currRelPath, i), lastSync.getChildren(lastRelPath,i))) {
                     lsDirty.add(s);
                 }
