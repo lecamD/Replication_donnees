@@ -31,20 +31,36 @@ public class Synchronizer {
 
         if (fichier.isDirectory() && lastFichier.isDirectory()) {
             int length = fichier.list().length;
+            int length2 = lastFichier.list().length;
+
+            if (length != length2) {
+                for (int i=0; i<length;i++) {
+
+                    File file = new File(lastFichier.getAbsolutePath()+"/"+fs.getChildren(currRelPath, i));
+                    if (!file.exists()) {
+                        lsDirty.add(file.getAbsolutePath());
+                    }
+                }
+            }
+
             for (int i = 0; i<length;i++) {
-                List<String> lis = computeDirty(lastSync, fs, currRelPath+"/"+fs.getChildren(currRelPath, i), lastRelPath+"/"+lastSync.getChildren(lastRelPath,i));
-                for (String s : lis) {
-                    lsDirty.add(s);
+                for (int j=0; j<length2;j++) {
+                    List<String> lis = computeDirty(lastSync, fs, currRelPath + "/" + fs.getChildren(currRelPath, i), lastRelPath + "/" + lastSync.getChildren(lastRelPath, j));
+                    for (String s : lis) {
+                        lsDirty.add(s);
+                    }
                 }
             }
         }
 
-        else /*(fichier.isFile() && lastFichier.isFile()) */{
+        else { // isFile()
 
-            String checksumfs = getMD5Checksum(fichier.getAbsolutePath());
-            String checksumls = getMD5Checksum(lastFichier.getAbsolutePath());
-            if (!checksumfs.equals(checksumls) ) {
-                lsDirty.add(fichier.getPath());
+            if (fichier.getName().equals(lastFichier.getName())) {
+                String checksumfs = getMD5Checksum(fichier.getAbsolutePath());
+                String checksumls = getMD5Checksum(lastFichier.getAbsolutePath());
+                if (!checksumfs.equals(checksumls)) {
+                    lsDirty.add(fichier.getPath());
+                }
             }
         }
 
